@@ -1,0 +1,12 @@
+{
+    "node-module-intellisense.modulePaths": [
+        "src/"
+    ],
+
+    "javascript.commonjs.resolve.moduleDirectory": [
+        "node_modules", "src"
+    ],
+    "standard.workingDirectories": [
+        "src/"
+    ]
+}

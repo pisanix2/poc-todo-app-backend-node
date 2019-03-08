@@ -1,0 +1,32 @@
+# to run compose
+## docker-compose -f docker/docker-compose.yml up -d
+# to stop compose
+## docker-compose -f docker/docker-compose.yml down
+
+version: '3'
+services:
+  todo_api:
+    build:
+      context: ../
+      dockerfile: docker/dockerfile
+    restart: always
+    environment:
+      LAUNCHER_NAME: 'todo'
+      DATABASE_HOST: 'db'
+      PORT: 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - "db"
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
