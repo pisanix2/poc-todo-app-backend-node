@@ -1,11 +1,7 @@
 const model = (sequelize, DataTypes) => {
-  const _model = sequelize.define('Todo',
-    {
+  const _model = sequelize.define('Todo',{
       title: DataTypes.STRING
-    },
-    {
-      tableName: 'todo'
-    }
+    }, { tableName: 'todo' }
   )
   return _model
 }

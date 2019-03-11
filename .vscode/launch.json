@@ -15,6 +15,17 @@
               "PORT": "8082",
               "NODE_PATH": "${workspaceFolder}/src"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "name": "Launch Worker",
+            "program": "${workspaceFolder}/src/launchers/index.js",
+            "env": {
+              "LAUNCHER_NAME": "worker",
+              "NODE_PATH": "${workspaceFolder}/src"
+            }
         }
     ]
 }

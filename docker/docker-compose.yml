@@ -13,11 +13,27 @@ services:
     environment:
       LAUNCHER_NAME: 'todo'
       DATABASE_HOST: 'db'
+      AMQP_HOST: 'rabbitmq'
       PORT: 8080
     ports:
       - 8080:8080
     depends_on:
       - "db"
+  todo_worker:
+    build:
+      context: ../
+      dockerfile: docker/dockerfile
+    restart: always
+    environment:
+      LAUNCHER_NAME: 'worker'
+      DATABASE_HOST: 'db'
+      AMQP_HOST: 'rabbitmq'
+      PORT: 8085
+    ports:
+      - 8085:8085
+    depends_on:
+      - "db"
+      - "rabbitmq"
   db:
     image: postgres
     restart: always
@@ -30,3 +46,9 @@ services:
     restart: always
     ports:
       - 8081:8080
+  rabbitmq:
+    image: rabbitmq:3.7.12-management
+    restart: always
+    ports: 
+      - 15672:15672
+      - 5672:5672
