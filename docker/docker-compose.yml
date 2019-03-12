@@ -12,14 +12,14 @@ services:
     restart: always
     environment:
       LAUNCHER_NAME: 'todo'
-      DATABASE_HOST: 'db'
+      DATABASE_HOST: 'postgres'
       AMQP_HOST: 'rabbitmq'
       ES_HOST: 'elasticsearch'
       PORT: 8080
     ports:
       - 8080:8080
     depends_on:
-      - "db"
+      - "postgres"
       - "rabbitmq"
       - "elasticsearch"
   todo_worker:
@@ -29,14 +29,14 @@ services:
     restart: always
     environment:
       LAUNCHER_NAME: 'worker'
-      DATABASE_HOST: 'db'
+      DATABASE_HOST: 'postgres'
       AMQP_HOST: 'rabbitmq'
       ES_HOST: 'elasticsearch'
     depends_on:
-      - "db"
+      - "postgres"
       - "rabbitmq"
       - "elasticsearch"
-  db:
+  postgres:
     image: postgres
     restart: always
     ports:

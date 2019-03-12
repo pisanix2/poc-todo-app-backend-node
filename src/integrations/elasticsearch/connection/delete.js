@@ -1,10 +1,12 @@
 const client = require('./client')
 
 const fn = async ({ index, type, id }) => {
+    type = type || 'pt-br'
     const options = {
         index,
         type,
-        id
+        id,
+        refresh: 'wait_for'
     }
     return await client.delete(options)
 }

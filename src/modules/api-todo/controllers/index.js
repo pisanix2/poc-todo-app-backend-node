@@ -1,6 +1,6 @@
 const rabbitmq = require('integrations/rabbitmq')
 const elasticsearch = require('integrations/elasticsearch')
-const { TODO_INDEX } = require('modules/helpers/worker/enum')
+const { TODO_INDEX_REGISTER, TODO_INDEX_DEL } = require('modules/helpers/worker/enum')
 const controllers = {}
 
 controllers.get = async ({ db }) => {
@@ -22,7 +22,7 @@ controllers.getById = async ({ db, error, params }) => {
 
 controllers.post = async ({ db, payload }) => {
     const data = await db.Todo.create(payload)
-    rabbitmq.send(TODO_INDEX, data)
+    await rabbitmq.send(TODO_INDEX_REGISTER, data)
     return data
 }
 
@@ -31,7 +31,7 @@ controllers.put = async ({ db, error, params, payload }) => {
     const data = await db.Todo.findByPk(id)
     if (!data) throw error.buildError(404, 'Not found')
     await data.update(payload)
-    rabbitmq.send(TODO_INDEX, data)
+    await rabbitmq.send(TODO_INDEX_REGISTER, data)
     return data
 }
 
@@ -40,10 +40,11 @@ controllers.del = async ({ db, error, params }) => {
     const data = await db.Todo.findByPk(id)
     if (!data) throw error.buildError(404, 'Not found')
     await data.destroy()
+    await rabbitmq.send(TODO_INDEX_DEL, data)
     return data
 }
 
-controllers.index = async ({ db, where }) => {
+controllers.indexRegister = async ({ db, where }) => {
     const data = await db.Todo.findAll({ where: where })
     const mapIndex = data.map(el => ({
         id: el.id,
@@ -51,6 +52,11 @@ controllers.index = async ({ db, where }) => {
     }))
     const index = elasticsearch.indexName('todo')
     elasticsearch.bulk({ index: index, body: mapIndex })
+}
+
+controllers.indexDel = async ({ content }) => {
+    const index = elasticsearch.indexName('todo')
+    elasticsearch.deleteById({ index: index, id: content.id })
 }
 
 module.exports = controllers

@@ -1,8 +1,7 @@
 const client = require('./client')
 
 const fn = async ({ index, type, body }) => {
-    type = type | 'pt-br'
-
+    type = type || 'pt-br'
     const bulkList = []
     body.forEach(el => {
         const hed = {}
@@ -23,7 +22,8 @@ const fn = async ({ index, type, body }) => {
     const options = {
         index: index,
         type: type,
-        body: bulkList
+        body: bulkList,
+        refresh: 'wait_for'
     }
     return await client.bulk(options)
 }
