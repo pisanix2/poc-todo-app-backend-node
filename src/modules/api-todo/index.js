@@ -14,6 +14,7 @@ const validation = require('./validations')
 const handler = require('integrations/express/handler')
 
 router.get('/', handler(controller, 'get'))
+router.get('/fromIndex/', handler(controller, 'getFromIndex'))
 router.get('/:id', handler(controller, 'getById'))
 router.post('/', validation.validate, handler(controller, 'post'))
 router.put('/:id', validation.validate, handler(controller, 'put'))
