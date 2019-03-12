@@ -1,6 +1,7 @@
 const client = require('./client')
 
 const fn = async ({ index, type, body }) => {
+    type = type || 'pt-br'
     const options = {
         index,
         type,
