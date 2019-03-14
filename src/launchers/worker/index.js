@@ -14,8 +14,8 @@ const setup = async () => {
     // Register queues
     //
     const { workerRegister, workerDel } = require('modules/worker-todo')
-    rabbitmq.consume(TODO_INDEX_REGISTER, workerRegister)
-    rabbitmq.consume(TODO_INDEX_DEL, workerDel)
+    await rabbitmq.consume(TODO_INDEX_REGISTER, workerRegister)
+    await rabbitmq.consume(TODO_INDEX_DEL, workerDel)
 }
 
 module.exports = setup
