@@ -14,7 +14,7 @@ controllers.getFromIndex = async () => {
 }
 
 controllers.getById = async ({ db, error, params }) => {
-    const id = params.id
+    const { id } = params
     const data = await db.Todo.findByPk(id)
     if (!data) throw error.buildError(404, 'Not found')
     return data
@@ -27,7 +27,7 @@ controllers.post = async ({ db, payload }) => {
 }
 
 controllers.put = async ({ db, error, params, payload }) => {
-    const id = params.id
+    const { id } = params
     const data = await db.Todo.findByPk(id)
     if (!data) throw error.buildError(404, 'Not found')
     await data.update(payload)
@@ -36,7 +36,7 @@ controllers.put = async ({ db, error, params, payload }) => {
 }
 
 controllers.del = async ({ db, error, params }) => {
-    const id = params.id
+    const { id } = params
     const data = await db.Todo.findByPk(id)
     if (!data) throw error.buildError(404, 'Not found')
     await data.destroy()

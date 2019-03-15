@@ -13,7 +13,7 @@ const call = (controller, method) => {
             const code = method === 'post' ? 201 : 200
             res.status(code).json(data)
         } catch (error) {
-            res.status(error.code).json(error)
+            res.status(error.code || 500).json(error)
         }
     }
 }
