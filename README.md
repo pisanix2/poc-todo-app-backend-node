@@ -14,6 +14,7 @@
  - Integração com redis
  - Criar mecanismo para injeção de dependencias
  - Graphql - https://blog.apollographql.com/modularizing-your-graphql-schema-code-d7f71d5ed5f2
+ - monorepo - https://en.wikipedia.org/wiki/Monorepo
 
 ## Artigos
 
