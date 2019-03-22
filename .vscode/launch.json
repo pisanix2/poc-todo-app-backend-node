@@ -17,6 +17,18 @@
             }
         },
         {
+          "type": "node",
+          "request": "launch",
+          "console": "integratedTerminal",
+          "name": "Launch whatsapp API",
+          "program": "${workspaceFolder}/src/launchers/index.js",
+          "env": {
+            "LAUNCHER_NAME": "whatsapp",
+            "PORT": "8086",
+            "NODE_PATH": "${workspaceFolder}/src"
+          }
+        },
+        {
             "type": "node",
             "request": "launch",
             "console": "integratedTerminal",
